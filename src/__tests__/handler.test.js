@@ -1,7 +1,82 @@
+jest.mock("../helpers/is-event-valid", () => jest.fn());
+jest.mock("../intents/launch", () => jest.fn());
+
 const { getUpdate } = require("../handler");
+const isEventValid = require("../helpers/is-event-valid");
+const launch = require("../intents/launch");
 
 describe("handler#getUpdate()", () => {
-  it("should", () => {
-    expect(true).toEqual(true);
+  afterEach(() => {
+    jest.resetAllMocks();
+    jest.resetModules();
+  });
+
+  it("should call the callback with an error if the event is invalid", done => {
+    isEventValid.mockImplementation(() => false);
+
+    getUpdate({}, {}, (error, response) => {
+      expect(response).toBeUndefined();
+      expect(error).toEqual("Request made from invalid application");
+      done();
+    });
+  });
+
+  it("should call the callback with an error the request cannot be handled", done => {
+    isEventValid.mockImplementation(() => true);
+
+    getUpdate(
+      {
+        request: {
+          type: "SomeInvalidRequestType"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(response).toBeUndefined();
+        expect(error).toEqual("Unable to handle request");
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with an error if LaunchRequest fails", done => {
+    isEventValid.mockImplementation(() => true);
+    launch.mockImplementation(() => Promise.reject());
+
+    getUpdate(
+      {
+        request: {
+          type: "SomeInvalidRequestType"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(response).toBeUndefined();
+        expect(error).toEqual("Unable to handle request");
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a valid response for a LaunchRequest", done => {
+    isEventValid.mockImplementation(() => true);
+    launch.mockImplementation(() => Promise.resolve("Valid response"));
+
+    getUpdate(
+      {
+        request: {
+          type: "LaunchRequest"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0",
+          response: "Valid response"
+        });
+        done();
+      }
+    );
   });
 });

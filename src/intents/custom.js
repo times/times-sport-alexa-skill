@@ -1,12 +1,4 @@
-const launch = () => ({
-  outputSpeech: {
-    type: "PlainText",
-    text: "Welcome to The Times World Cup briefing"
-  },
-  shouldEndSession: true
-});
-
-const custom = ({ name }) => {
+module.exports = ({ name }) => {
   switch (name) {
     case "StartBriefing":
       return launch();
@@ -20,9 +12,4 @@ const custom = ({ name }) => {
         shouldEndSession: false
       };
   }
-};
-
-module.exports = {
-  launch,
-  custom
 };

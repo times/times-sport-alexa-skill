@@ -1,5 +1,7 @@
-const { isEventValid, asyncResponse } = require("./helpers");
-const { launch, custom } = require("./intents");
+const asyncResponse = require("./helpers/async-response");
+const isEventValid = require("./helpers/is-event-valid");
+const launch = require("./intents/launch");
+const custom = require("./intents/custom");
 
 const makeRequest = ({ request }) => {
   switch (request.type) {
@@ -10,8 +12,10 @@ const makeRequest = ({ request }) => {
       return asyncResponse(custom(request.intent));
 
     case "SessionEndedRequest":
-    default:
       return asyncResponse(Promise.resolve());
+
+    default:
+      return asyncResponse(Promise.reject("Unable to handle request"));
   }
 };
 
@@ -21,7 +25,7 @@ module.exports.getUpdate = async (event, context, callback) => {
     return;
   }
 
-  const [response, err] = await makeRequest(event);
+  const { err, response } = await makeRequest(event);
 
   if (err) {
     callback(err);

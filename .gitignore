@@ -8,3 +8,4 @@ yarn-error.log
 
 # App specific
 env.yml
+coverage
