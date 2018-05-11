@@ -1,10 +1,8 @@
 jest.mock("../helpers/is-event-valid", () => jest.fn());
-jest.mock("../intents/launch", () => jest.fn());
 jest.mock("../intents/custom", () => jest.fn());
 
 const { getUpdate } = require("../handler");
 const isEventValid = require("../helpers/is-event-valid");
-const launch = require("../intents/launch");
 const custom = require("../intents/custom");
 
 describe("handler#getUpdate()", () => {
@@ -43,7 +41,7 @@ describe("handler#getUpdate()", () => {
 
   it("should call the callback with an error if LaunchRequest fails", done => {
     isEventValid.mockImplementation(() => true);
-    launch.mockImplementation(() => Promise.reject());
+    custom.mockImplementation(() => Promise.reject());
 
     getUpdate(
       {
@@ -62,7 +60,7 @@ describe("handler#getUpdate()", () => {
 
   it("should call the callback with a valid response for a LaunchRequest", done => {
     isEventValid.mockImplementation(() => true);
-    launch.mockImplementation(() => Promise.resolve("Valid response"));
+    custom.mockImplementation(() => Promise.resolve("Valid response"));
 
     getUpdate(
       {
