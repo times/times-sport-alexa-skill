@@ -1,3 +1,5 @@
+const launch = require("./launch");
+
 module.exports = ({ name }) => {
   switch (name) {
     case "StartBriefing":

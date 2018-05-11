@@ -13,7 +13,7 @@
     "coverageDirectory": "coverage",
     "collectCoverageFrom": ["src/**/*.js"],
     "collectCoverage": true,
-    "coveragePathIgnorePatterns": [],
+    "coveragePathIgnorePatterns": ["<rootDir>/src/config.js"],
     "coverageThreshold": {
       "global": {
         "branches": 100,
