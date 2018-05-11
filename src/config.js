@@ -1,3 +1,5 @@
 module.exports = {
-  applicationId: process.env.ALEXA_APPLICATION_ID
+  alexa: {
+    applicationId: process.env.ALEXA_APPLICATION_ID
+  }
 };
