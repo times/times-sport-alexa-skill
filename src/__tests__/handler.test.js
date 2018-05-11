@@ -1,9 +1,11 @@
 jest.mock("../helpers/is-event-valid", () => jest.fn());
 jest.mock("../intents/launch", () => jest.fn());
+jest.mock("../intents/custom", () => jest.fn());
 
 const { getUpdate } = require("../handler");
 const isEventValid = require("../helpers/is-event-valid");
 const launch = require("../intents/launch");
+const custom = require("../intents/custom");
 
 describe("handler#getUpdate()", () => {
   afterEach(() => {
@@ -74,6 +76,54 @@ describe("handler#getUpdate()", () => {
         expect(response).toEqual({
           version: "1.0",
           response: "Valid response"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a valid response for an IntentRequest", done => {
+    isEventValid.mockImplementation(() => true);
+    custom.mockImplementation(() => Promise.resolve("Valid response"));
+
+    getUpdate(
+      {
+        request: {
+          type: "IntentRequest",
+          intent: {
+            foo: "bar"
+          }
+        }
+      },
+      {},
+      (error, response) => {
+        expect(custom).toBeCalledWith({
+          foo: "bar"
+        });
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0",
+          response: "Valid response"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a valid response for an SessionEndedRequest", done => {
+    isEventValid.mockImplementation(() => true);
+
+    getUpdate(
+      {
+        request: {
+          type: "SessionEndedRequest"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0"
         });
         done();
       }
