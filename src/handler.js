@@ -7,7 +7,7 @@ const makeRequest = ({ request }) => {
     case "LaunchRequest": // When the skill is first launched
       return asyncResponse(custom("StartBriefing"));
 
-    case "IntentRequest": // When the user makes an voice request, like asking a question
+    case "IntentRequest": // When the user makes a voice request, like asking a question
       return asyncResponse(custom(request.intent));
 
     case "SessionEndedRequest":
