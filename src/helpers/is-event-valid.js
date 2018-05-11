@@ -1,4 +1,4 @@
-const { applicationId } = require("./config");
+const { applicationId } = require("../config");
 
 module.exports = ({ session }) => {
   try {
