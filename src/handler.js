@@ -1,12 +1,11 @@
 const asyncResponse = require("./helpers/async-response");
 const isEventValid = require("./helpers/is-event-valid");
-const launch = require("./intents/launch");
 const custom = require("./intents/custom");
 
 const makeRequest = ({ request }) => {
   switch (request.type) {
     case "LaunchRequest": // When the skill is first launched
-      return asyncResponse(launch());
+      return asyncResponse(custom("StartBriefing"));
 
     case "IntentRequest": // When the user makes an voice request, like asking a question
       return asyncResponse(custom(request.intent));

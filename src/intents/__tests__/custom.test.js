@@ -1,12 +1,45 @@
-jest.mock("../launch", () => jest.fn());
 const custom = require("../custom");
-const launch = require("../launch");
 
 describe("intents/custom", () => {
-  it("should call launch if StartBriefing is passed", () => {
-    launch.mockImplementation(() => "Foo");
+  it("should start the AudioPlayer if StartBriefing is passed", () => {
+    const response = custom({ name: "StartBriefing" });
+    expect(response.directives[0].type).toEqual("AudioPlayer.Play");
+    expect(response.shouldEndSession).toEqual(true);
+  });
 
-    expect(custom({ name: "StartBriefing" })).toEqual("Foo");
+  it("should start the AudioPlayer if AMAZON.ResumeIntent is passed", () => {
+    const response = custom({ name: "AMAZON.ResumeIntent" });
+    expect(response.directives[0].type).toEqual("AudioPlayer.Play");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
+  it("should stop the AudioPlayer if AMAZON.CancelIntent is passed", () => {
+    const response = custom({ name: "AMAZON.CancelIntent" });
+    expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
+  it("should stop the AudioPlayer if AMAZON.StopIntent is passed", () => {
+    const response = custom({ name: "AMAZON.StopIntent" });
+    expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
+  it("should stop the AudioPlayer if AMAZON.PauseIntent is passed", () => {
+    const response = custom({ name: "AMAZON.PauseIntent" });
+    expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
+  it("should stop the AudioPlayer if AMAZON.HelpIntent is passed", () => {
+    const response = custom({ name: "AMAZON.HelpIntent" });
+    expect(response).toEqual({
+      outputSpeech: {
+        type: "PlainText",
+        text: "Help text goes here, with a prompting follow up question..?"
+      },
+      shouldEndSession: false
+    });
   });
 
   it("should return an object when an unknown intent name is passed", () => {
