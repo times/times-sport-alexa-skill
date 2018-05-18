@@ -1,5 +1,7 @@
 jest.mock("../../config", () => ({
-  applicationId: "abcd"
+  alexa: {
+    applicationId: "abcd"
+  }
 }));
 const isEventValid = require("../is-event-valid");
 

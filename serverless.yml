@@ -2,7 +2,7 @@ service: world-cup-2018-briefing
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   region: ${opt:region, self:custom.region}
   stage: ${opt:stage, self:custom.stage}
   profile: ${opt:profile}

@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "deploy": "serverless deploy"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "serverless": "^1.27.2"
   },
   "jest": {
     "coverageDirectory": "coverage",
