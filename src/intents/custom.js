@@ -1,8 +1,56 @@
-const getBriefingUrl = require("../helpers/get-briefing-url");
+const { getLatestBriefing } = require("../helpers/get-audio-data");
 
-module.exports = ({ name }) => {
+module.exports = async (intent, event) => {
+  const { name } = intent;
+
   switch (name) {
+    case "StartPodcast":
+      const latestPodcast = await getLatestPodcast();
+
+      return {
+        outputSpeech: {
+          type: "PlainText",
+          text:
+            "PODCAST - Help text goes here, with a prompting follow up question..?"
+        },
+        // directives: [
+        //   {
+        //     type: "AudioPlayer.Play",
+        //     playBehavior: "REPLACE_ALL",
+        //     audioItem: {
+        //       stream: {
+        //         token: latestPodcast.enclosure.url,
+        //         url: latestPodcast.enclosure.url,
+        //         offsetInMilliseconds: 0
+        //       }
+        //     }
+        //   }
+        // ],
+        shouldEndSession: true
+      };
     case "StartBriefing":
+      const latestBriefing = await getLatestBriefing();
+      return {
+        outputSpeech: {
+          type: "PlainText",
+          text:
+            "BRIEFING - Help text goes here, with a prompting follow up question..?"
+        },
+        directives: [
+          {
+            type: "AudioPlayer.Play",
+            playBehavior: "REPLACE_ALL",
+            audioItem: {
+              stream: {
+                token: "abc",
+                url: latestBriefing.enclosure.url,
+                offsetInMilliseconds: 0
+              }
+            }
+          }
+        ],
+        shouldEndSession: true
+      };
     case "AMAZON.ResumeIntent":
       return {
         directives: [
@@ -12,14 +60,14 @@ module.exports = ({ name }) => {
             audioItem: {
               stream: {
                 token: "the-times-world-cup-briefing",
-                url: getBriefingUrl(),
+                url: latestBriefing.url,
                 offsetInMilliseconds: 0
               }
             }
           }
-        ],
-        shouldEndSession: true
+        ]
       };
+      return;
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
     case "AMAZON.PauseIntent":
