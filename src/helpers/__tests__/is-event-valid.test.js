@@ -18,6 +18,14 @@ describe("#isEventValid()", () => {
     ).toEqual(true);
   });
 
+  it("should return true if no session is provided", () => {
+    expect(
+      isEventValid({
+        session: false
+      })
+    ).toEqual(true);
+  });
+
   it("should return false if the event has the correct application ID", () => {
     expect(
       isEventValid({

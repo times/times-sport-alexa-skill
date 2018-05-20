@@ -3,7 +3,7 @@ const {
   getLatestPodcast
 } = require("../helpers/get-audio-data");
 
-module.exports = async (intent, context) => {
+module.exports = async (intent, context = {}) => {
   const { AudioPlayer = null } = context;
   const { name } = intent;
 

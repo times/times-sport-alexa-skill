@@ -91,13 +91,21 @@ describe("handler#getUpdate()", () => {
           intent: {
             foo: "bar"
           }
+        },
+        context: {
+          foo: "baz"
         }
       },
       {},
       (error, response) => {
-        expect(custom).toBeCalledWith({
-          foo: "bar"
-        });
+        expect(custom).toBeCalledWith(
+          {
+            foo: "bar"
+          },
+          {
+            foo: "baz"
+          }
+        );
         expect(error).toEqual(null);
         expect(response).toEqual({
           version: "1.0",

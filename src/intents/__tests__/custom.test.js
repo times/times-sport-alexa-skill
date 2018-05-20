@@ -2,31 +2,43 @@ const custom = require("../custom");
 
 describe("intents/custom", () => {
   it("should start the AudioPlayer if StartBriefing is passed", async () => {
-    const response = await custom({ name: "StartBriefing" });
+    const response = await custom({ name: "StartBriefing" }, {});
     expect(response.directives[0].type).toEqual("AudioPlayer.Play");
     expect(response.shouldEndSession).toEqual(true);
   });
 
   it("should start the AudioPlayer if AMAZON.ResumeIntent is passed", async () => {
-    const response = await custom({ name: "AMAZON.ResumeIntent" });
+    const response = await custom(
+      { name: "AMAZON.ResumeIntent" },
+      { AudioPlayer: { token: "abc", offsetInMilliseconds: 10 } }
+    );
     expect(response.directives[0].type).toEqual("AudioPlayer.Play");
     expect(response.shouldEndSession).toEqual(true);
   });
 
   it("should stop the AudioPlayer if AMAZON.CancelIntent is passed", async () => {
-    const response = await custom({ name: "AMAZON.CancelIntent" });
+    const response = await custom(
+      { name: "AMAZON.CancelIntent" },
+      { AudioPlayer: {} }
+    );
     expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
     expect(response.shouldEndSession).toEqual(true);
   });
 
   it("should stop the AudioPlayer if AMAZON.StopIntent is passed", async () => {
-    const response = await custom({ name: "AMAZON.StopIntent" });
+    const response = await custom(
+      { name: "AMAZON.StopIntent" },
+      { AudioPlayer: {} }
+    );
     expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
     expect(response.shouldEndSession).toEqual(true);
   });
 
   it("should stop the AudioPlayer if AMAZON.PauseIntent is passed", async () => {
-    const response = await custom({ name: "AMAZON.PauseIntent" });
+    const response = await custom(
+      { name: "AMAZON.PauseIntent" },
+      { AudioPlayer: { token: "abc", offsetInMilliseconds: 10 } }
+    );
     expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
     expect(response.shouldEndSession).toEqual(true);
   });

@@ -7,7 +7,7 @@ const makeRequest = async event => {
 
   switch (request.type) {
     case "LaunchRequest": // When the skill is first launched
-      return asyncResponse(custom({ name: "StartBriefing" }, context));
+      return asyncResponse(custom({ name: "StartBriefing" }));
 
     case "IntentRequest": // When the user makes a voice request, like asking a question
       return asyncResponse(custom(request.intent, context));
