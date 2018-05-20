@@ -1,48 +1,42 @@
-const { getLatestBriefing } = require("../helpers/get-audio-data");
+const {
+  getLatestBriefing,
+  getLatestPodcast
+} = require("../helpers/get-audio-data");
 
-module.exports = async (intent, event) => {
+module.exports = async (intent, context) => {
+  const { AudioPlayer = null } = context;
   const { name } = intent;
+
+  const latestBriefing = await getLatestBriefing();
+  const latestPodcast = await getLatestPodcast();
 
   switch (name) {
     case "StartPodcast":
-      const latestPodcast = await getLatestPodcast();
-
       return {
-        outputSpeech: {
-          type: "PlainText",
-          text:
-            "PODCAST - Help text goes here, with a prompting follow up question..?"
-        },
-        // directives: [
-        //   {
-        //     type: "AudioPlayer.Play",
-        //     playBehavior: "REPLACE_ALL",
-        //     audioItem: {
-        //       stream: {
-        //         token: latestPodcast.enclosure.url,
-        //         url: latestPodcast.enclosure.url,
-        //         offsetInMilliseconds: 0
-        //       }
-        //     }
-        //   }
-        // ],
-        shouldEndSession: true
-      };
-    case "StartBriefing":
-      const latestBriefing = await getLatestBriefing();
-      return {
-        outputSpeech: {
-          type: "PlainText",
-          text:
-            "BRIEFING - Help text goes here, with a prompting follow up question..?"
-        },
         directives: [
           {
             type: "AudioPlayer.Play",
             playBehavior: "REPLACE_ALL",
             audioItem: {
               stream: {
-                token: "abc",
+                token: latestPodcast.enclosure.url,
+                url: latestPodcast.enclosure.url,
+                offsetInMilliseconds: 0
+              }
+            }
+          }
+        ],
+        shouldEndSession: true
+      };
+    case "StartBriefing":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.Play",
+            playBehavior: "REPLACE_ALL",
+            audioItem: {
+              stream: {
+                token: latestBriefing.enclosure.url,
                 url: latestBriefing.enclosure.url,
                 offsetInMilliseconds: 0
               }
@@ -59,13 +53,14 @@ module.exports = async (intent, event) => {
             playBehavior: "REPLACE_ALL",
             audioItem: {
               stream: {
-                token: "the-times-world-cup-briefing",
-                url: latestBriefing.url,
-                offsetInMilliseconds: 0
+                token: AudioPlayer.token,
+                url: AudioPlayer.token,
+                offsetInMilliseconds: AudioPlayer.offsetInMilliseconds
               }
             }
           }
-        ]
+        ],
+        shouldEndSession: true
       };
       return;
     case "AMAZON.CancelIntent":

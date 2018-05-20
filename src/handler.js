@@ -3,17 +3,28 @@ const isEventValid = require("./helpers/is-event-valid");
 const custom = require("./intents/custom");
 
 const makeRequest = async event => {
-  console.log(JSON.stringify(event.session));
-  const { request, session } = event;
+  const { request, context } = event;
+
   switch (request.type) {
     case "LaunchRequest": // When the skill is first launched
-      return asyncResponse(custom("StartBriefing", session.context));
+      return asyncResponse(custom({ name: "StartBriefing" }, context));
 
     case "IntentRequest": // When the user makes a voice request, like asking a question
-      return asyncResponse(custom(request.intent, session.context));
+      return asyncResponse(custom(request.intent, context));
 
     case "SessionEndedRequest":
       return asyncResponse(Promise.resolve());
+
+    case "AudioPlayer.PlaybackNearlyFinished":
+      console.log("Playback almost over!");
+      return asyncResponse(null);
+
+    case "AudioPlayer.PlaybackStopped":
+      console.log("Playback stopped!");
+      return asyncResponse(null);
+
+    case "System.ExceptionEncountered":
+      return asyncResponse(null);
 
     default:
       return asyncResponse(Promise.reject("Unable to handle request"));

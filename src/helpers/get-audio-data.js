@@ -3,5 +3,10 @@ const loadLatestFeedItem = require("./load-latest-feed-item");
 module.exports.getLatestPodcast = () =>
   loadLatestFeedItem("https://rss.acast.com/timesthegame");
 
-module.exports.getLatestBriefing = () =>
-  loadLatestFeedItem("https://rss.acast.com/timesthegame");
+module.exports.getLatestBriefing = () => ({
+  enclosure: {
+    url:
+      "http://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/sample-briefing.mp3"
+  }
+});
+// loadLatestFeedItem("https://rss.acast.com/timesthegame");
