@@ -40,7 +40,7 @@ describe("intents/custom", () => {
       { AudioPlayer: { token: "abc", offsetInMilliseconds: 10 } }
     );
     expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
-    expect(response.shouldEndSession).toEqual(true);
+    expect(response.shouldEndSession).toEqual(false);
   });
 
   it("should stop the AudioPlayer if AMAZON.HelpIntent is passed", async () => {

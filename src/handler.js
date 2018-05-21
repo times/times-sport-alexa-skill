@@ -4,7 +4,7 @@ const custom = require("./intents/custom");
 
 const makeRequest = async event => {
   const { request, context } = event;
-  console.log("event:", event);
+
   switch (request.type) {
     case "LaunchRequest": // When the skill is first launched
       return asyncResponse(custom({ name: "StartBriefing" }));
