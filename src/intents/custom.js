@@ -93,7 +93,6 @@ module.exports = async (intent, context = {}) => {
         ],
         shouldEndSession: true
       };
-      return;
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
       return {

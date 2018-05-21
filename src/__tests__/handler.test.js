@@ -135,4 +135,122 @@ describe("handler#getUpdate()", () => {
       }
     );
   });
+
+  it("should call the callback with a null response for an AudioPlayer.PlaybackNearlyFinished", done => {
+    isEventValid.mockImplementation(() => true);
+
+    getUpdate(
+      {
+        request: {
+          type: "AudioPlayer.PlaybackNearlyFinished"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a null response for an AudioPlayer.PlaybackStopped", done => {
+    isEventValid.mockImplementation(() => true);
+
+    getUpdate(
+      {
+        request: {
+          type: "AudioPlayer.PlaybackStopped"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a valid response for an PlaybackController.PlayCommandIssued", done => {
+    isEventValid.mockImplementation(() => true);
+    custom.mockImplementation(() => Promise.resolve("Valid response"));
+
+    getUpdate(
+      {
+        request: {
+          type: "PlaybackController.PlayCommandIssued"
+        },
+        context: {
+          foo: "baz"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(custom).toBeCalledWith(
+          {
+            name: "AMAZON.ResumeIntent"
+          },
+          {
+            foo: "baz"
+          }
+        );
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0",
+          response: "Valid response"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a valid response for an PlaybackController.PauseCommandIssued", done => {
+    isEventValid.mockImplementation(() => true);
+    custom.mockImplementation(() => Promise.resolve("Valid response"));
+
+    getUpdate(
+      {
+        request: {
+          type: "PlaybackController.PauseCommandIssued"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(custom).toBeCalledWith({
+          name: "AMAZON.PauseIntent"
+        });
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0",
+          response: "Valid response"
+        });
+        done();
+      }
+    );
+  });
+
+  it("should call the callback with a null response for an System.ExceptionEncountered", done => {
+    isEventValid.mockImplementation(() => true);
+
+    getUpdate(
+      {
+        request: {
+          type: "System.ExceptionEncountered"
+        }
+      },
+      {},
+      (error, response) => {
+        expect(error).toEqual(null);
+        expect(response).toEqual({
+          version: "1.0"
+        });
+        done();
+      }
+    );
+  });
 });
