@@ -16,11 +16,11 @@ const makeRequest = async event => {
       return asyncResponse(Promise.resolve());
 
     case "AudioPlayer.PlaybackNearlyFinished":
-      console.log("Playback almost over!");
+      console.log("Playback almost over!"); // eslint-disable-line no-console
       return asyncResponse(Promise.resolve());
 
     case "AudioPlayer.PlaybackStopped":
-      console.log("Playback stopped!");
+      console.log("Playback stopped!"); // eslint-disable-line no-console
       return asyncResponse(Promise.resolve());
 
     case "PlaybackController.PlayCommandIssued":
