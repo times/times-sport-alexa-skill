@@ -22,6 +22,21 @@ module.exports = async (intent, context = {}) => {
                 token: latestPodcast.enclosure.url,
                 url: latestPodcast.enclosure.url,
                 offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: latestPodcast.title,
+                subtitle: latestPodcast.itunes.subtitle,
+                art: {
+                  contentDescription: latestPodcast.title,
+                  sources: [
+                    {
+                      url: latestPodcast.itunes.image,
+                      size: "LARGE",
+                      widthPixels: "1500",
+                      heightPixels: "1500"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -39,6 +54,22 @@ module.exports = async (intent, context = {}) => {
                 token: latestBriefing.enclosure.url,
                 url: latestBriefing.enclosure.url,
                 offsetInMilliseconds: 0
+              },
+              metadata: {
+                title: "The Times World Cup briefing",
+                subtitle: "All the latest from Russia",
+                art: {
+                  contentDescription: "The Times World Cup briefing logo",
+                  sources: [
+                    {
+                      url:
+                        "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/alexa-show-image-960x640.png",
+                      size: "MEDIUM",
+                      widthPixels: "960",
+                      heightPixels: "640"
+                    }
+                  ]
+                }
               }
             }
           }
@@ -65,7 +96,6 @@ module.exports = async (intent, context = {}) => {
       return;
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
-    case "AMAZON.PauseIntent":
       return {
         directives: [
           {
@@ -73,6 +103,15 @@ module.exports = async (intent, context = {}) => {
           }
         ],
         shouldEndSession: true
+      };
+    case "AMAZON.PauseIntent":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.Stop"
+          }
+        ],
+        shouldEndSession: false
       };
     case "AMAZON.HelpIntent":
       return {

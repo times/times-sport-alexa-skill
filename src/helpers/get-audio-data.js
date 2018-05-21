@@ -9,4 +9,5 @@ module.exports.getLatestBriefing = () => ({
       "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/sample-briefing.mp3"
   }
 });
-// loadLatestFeedItem("https://rss.acast.com/timesthegame");
+
+// module.exports.getLatestPodcast().then(a => console.log({ a }));
