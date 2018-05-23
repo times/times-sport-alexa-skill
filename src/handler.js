@@ -2,15 +2,34 @@ const asyncResponse = require("./helpers/async-response");
 const isEventValid = require("./helpers/is-event-valid");
 const custom = require("./intents/custom");
 
-const makeRequest = ({ request }) => {
+const makeRequest = async event => {
+  const { request, context } = event;
+
   switch (request.type) {
     case "LaunchRequest": // When the skill is first launched
-      return asyncResponse(custom("StartBriefing"));
+      return asyncResponse(custom({ name: "StartBriefing" }));
 
     case "IntentRequest": // When the user makes a voice request, like asking a question
-      return asyncResponse(custom(request.intent));
+      return asyncResponse(custom(request.intent, context));
 
     case "SessionEndedRequest":
+      return asyncResponse(Promise.resolve());
+
+    case "AudioPlayer.PlaybackNearlyFinished":
+      console.log("Playback almost over!"); // eslint-disable-line no-console
+      return asyncResponse(Promise.resolve());
+
+    case "AudioPlayer.PlaybackStopped":
+      console.log("Playback stopped!"); // eslint-disable-line no-console
+      return asyncResponse(Promise.resolve());
+
+    case "PlaybackController.PlayCommandIssued":
+      return asyncResponse(custom({ name: "AMAZON.ResumeIntent" }, context));
+
+    case "PlaybackController.PauseCommandIssued":
+      return asyncResponse(custom({ name: "AMAZON.PauseIntent" }));
+
+    case "System.ExceptionEncountered":
       return asyncResponse(Promise.resolve());
 
     default:

@@ -9,3 +9,6 @@ yarn-error.log
 # App specific
 env.yml
 coverage
+
+# macOS
+.DS_Store
