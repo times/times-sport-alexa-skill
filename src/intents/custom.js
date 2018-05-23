@@ -44,10 +44,10 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: true
       };
     case "StartBriefing":
-      // case "DeeplinkStartBriefing":
-      //   if (name === "DeeplinkStartBriefing") {
-      //     console.log("Briefing started from deeplink");
-      //   }
+    case "DeeplinkStartBriefing":
+      if (name === "DeeplinkStartBriefing") {
+        console.log("Briefing started from deeplink");
+      }
 
       return {
         directives: [

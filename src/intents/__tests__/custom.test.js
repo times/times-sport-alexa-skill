@@ -16,6 +16,12 @@ describe("intents/custom", () => {
     expect(response.shouldEndSession).toEqual(true);
   });
 
+  it("should start the AudioPlayer if DeeplinkStartBriefing is passed", async () => {
+    const response = await custom({ name: "DeeplinkStartBriefing" }, {});
+    expect(response.directives[0].type).toEqual("AudioPlayer.Play");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
   it("should start the AudioPlayer if StartPodcast is passed", async () => {
     const response = await custom({ name: "StartPodcast" }, {});
     expect(response.directives[0].type).toEqual("AudioPlayer.Play");
