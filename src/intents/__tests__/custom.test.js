@@ -1,3 +1,12 @@
+jest.mock("../../helpers/get-audio-data", () => ({
+  getLatestBriefing: () =>
+    Promise.resolve({ enclosure: { url: "briefing/url" } }),
+  getLatestPodcast: () =>
+    Promise.resolve({
+      enclosure: { url: "podcast/url" },
+      itunes: { subtitle: "Foo bar" }
+    })
+}));
 const custom = require("../custom");
 
 describe("intents/custom", () => {
