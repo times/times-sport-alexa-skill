@@ -46,7 +46,7 @@ module.exports = async (intent, context = {}) => {
     case "StartBriefing":
     case "DeeplinkStartBriefing":
       if (name === "DeeplinkStartBriefing") {
-        console.log("Briefing started from deeplink");
+        console.log("Briefing started from deeplink"); // eslint-disable-line no-console
       }
 
       return {
