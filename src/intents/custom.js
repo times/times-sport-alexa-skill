@@ -45,6 +45,7 @@ module.exports = async (intent, context = {}) => {
       };
     case "StartBriefing":
     case "DeeplinkStartBriefing":
+    case "AMAZON.YesIntent":
       if (name === "DeeplinkStartBriefing") {
         console.log("Briefing started from deeplink"); // eslint-disable-line no-console
       }
@@ -100,6 +101,7 @@ module.exports = async (intent, context = {}) => {
       };
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
+    case "AMAZON.NoIntent":
       return {
         directives: [
           {

@@ -22,6 +22,12 @@ describe("intents/custom", () => {
     expect(response.shouldEndSession).toEqual(true);
   });
 
+  it("should start the AudioPlayer if AMAZON.YesIntent is passed", async () => {
+    const response = await custom({ name: "AMAZON.YesIntent" }, {});
+    expect(response.directives[0].type).toEqual("AudioPlayer.Play");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
   it("should start the AudioPlayer if StartPodcast is passed", async () => {
     const response = await custom({ name: "StartPodcast" }, {});
     expect(response.directives[0].type).toEqual("AudioPlayer.Play");
@@ -49,6 +55,15 @@ describe("intents/custom", () => {
   it("should stop the AudioPlayer if AMAZON.StopIntent is passed", async () => {
     const response = await custom(
       { name: "AMAZON.StopIntent" },
+      { AudioPlayer: {} }
+    );
+    expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
+    expect(response.shouldEndSession).toEqual(true);
+  });
+
+  it("should stop the AudioPlayer if AMAZON.NoIntent is passed", async () => {
+    const response = await custom(
+      { name: "AMAZON.NoIntent" },
       { AudioPlayer: {} }
     );
     expect(response.directives[0].type).toEqual("AudioPlayer.Stop");
