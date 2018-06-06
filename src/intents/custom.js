@@ -1,9 +1,23 @@
+const ua = require("universal-analytics");
+
 const {
   getLatestBriefing,
   getLatestPodcast
 } = require("../helpers/get-audio-data");
+const { ga } = require("./config");
+
+const sendEventFactory = ga => tracking =>
+  new Promise((resolve, reject) =>
+    ga.event(tracking, err => {
+      if (err) return reject(err);
+      resolve();
+    })
+  );
 
 module.exports = async (intent, context = {}) => {
+  const visitor = ua(ga.trackingId, event.session && event.session.user.userId);
+  const sendEvent = sendEventFactory(visitor);
+
   const { AudioPlayer = null } = context;
   const { name } = intent;
 
@@ -12,6 +26,11 @@ module.exports = async (intent, context = {}) => {
 
   switch (name) {
     case "StartPodcast":
+      await sendEvent({
+        ec: "Intent",
+        ea: "StartPodcast"
+      });
+
       return {
         directives: [
           {
@@ -50,6 +69,11 @@ module.exports = async (intent, context = {}) => {
         console.log("Briefing started from deeplink"); // eslint-disable-line no-console
       }
 
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
@@ -83,6 +107,13 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: true
       };
     case "AMAZON.ResumeIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name,
+        el: AudioPlayer.token,
+        ev: AudioPlayer.offsetInMilliseconds
+      });
+
       return {
         directives: [
           {
@@ -102,6 +133,11 @@ module.exports = async (intent, context = {}) => {
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
     case "AMAZON.NoIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
@@ -111,6 +147,11 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: true
       };
     case "AMAZON.PauseIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
@@ -120,6 +161,11 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: false
       };
     case "AMAZON.HelpIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         outputSpeech: {
           type: "PlainText",
