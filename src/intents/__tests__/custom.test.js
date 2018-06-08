@@ -69,7 +69,8 @@ describe("intents/custom", () => {
     expect(response).toEqual({
       outputSpeech: {
         type: "PlainText",
-        text: "Help text goes here, with a prompting follow up question..?"
+        text:
+          "Every morning Natalie Sawyer delivers the inside line from the England camp and the best World Cup analysis from our award-winning writers in Russia, just say: 'Alexa, ask Times Sport for the latest World Cup briefing'. Would you like to hear the briefing now?"
       },
       shouldEndSession: false
     });
@@ -82,7 +83,7 @@ describe("intents/custom", () => {
       outputSpeech: {
         type: "PlainText",
         text:
-          "I'm sorry, I didn't understand what you said. Would you like to hear the update?"
+          "I'm sorry, I didn't understand what you said. Would you like to hear the daily briefing?"
       },
       shouldEndSession: false
     });
