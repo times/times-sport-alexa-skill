@@ -6,7 +6,7 @@ module.exports.getLatestPodcast = () =>
 module.exports.getLatestBriefing = () => ({
   enclosure: {
     url:
-      "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/sample-briefing.mp3"
+      "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/launch-briefing.mp3"
   }
 });
 

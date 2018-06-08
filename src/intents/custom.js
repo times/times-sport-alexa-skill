@@ -61,8 +61,9 @@ module.exports = async (intent, context = {}) => {
                 offsetInMilliseconds: 0
               },
               metadata: {
-                title: "The Times World Cup briefing",
-                subtitle: "All the latest from Russia",
+                title: "Times Sport World Cup Briefing",
+                subtitle:
+                  "Natalie Sawyer brings you the key stories from Russia",
                 art: {
                   contentDescription: "The Times World Cup briefing logo",
                   sources: [

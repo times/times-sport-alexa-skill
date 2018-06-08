@@ -51,8 +51,9 @@ describe("integration test", () => {
                         }
                       ]
                     },
-                    subtitle: "All the latest from Russia",
-                    title: "The Times World Cup briefing"
+                    subtitle:
+                      "Natalie Sawyer brings you the key stories from Russia",
+                    title: "Times Sport World Cup Briefing"
                   },
                   stream: {
                     offsetInMilliseconds: 0,
