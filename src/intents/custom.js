@@ -1,9 +1,22 @@
+const ua = require("universal-analytics");
+
 const {
   getLatestBriefing,
   getLatestPodcast
 } = require("../helpers/get-audio-data");
+const { ga } = require("../config");
+
+const sendEventFactory = ga => tracking =>
+  new Promise(resolve => ga.event(tracking, () => resolve()));
 
 module.exports = async (intent, context = {}) => {
+  const visitor = ua(
+    ga.trackingId,
+    context.System && context.System.user && context.System.user.userId
+  );
+
+  const sendEvent = sendEventFactory(visitor);
+
   const { AudioPlayer = null } = context;
   const { name } = intent;
 
@@ -12,6 +25,11 @@ module.exports = async (intent, context = {}) => {
 
   switch (name) {
     case "StartPodcast":
+      await sendEvent({
+        ec: "Intent",
+        ea: "StartPodcast"
+      });
+
       return {
         directives: [
           {
@@ -50,6 +68,11 @@ module.exports = async (intent, context = {}) => {
         console.log("Briefing started from deeplink"); // eslint-disable-line no-console
       }
 
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
@@ -84,6 +107,13 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: true
       };
     case "AMAZON.ResumeIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name,
+        el: AudioPlayer.token,
+        ev: AudioPlayer.offsetInMilliseconds
+      });
+
       return {
         directives: [
           {
@@ -103,6 +133,11 @@ module.exports = async (intent, context = {}) => {
     case "AMAZON.CancelIntent":
     case "AMAZON.StopIntent":
     case "AMAZON.NoIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
@@ -112,22 +147,50 @@ module.exports = async (intent, context = {}) => {
         shouldEndSession: true
       };
     case "AMAZON.PauseIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         directives: [
           {
             type: "AudioPlayer.Stop"
           }
         ],
-        shouldEndSession: false
+        shouldEndSession: true
       };
     case "AMAZON.HelpIntent":
+      await sendEvent({
+        ec: "Intent",
+        ea: name
+      });
+
       return {
         outputSpeech: {
           type: "PlainText",
           text:
-            "Every morning Natalie Sawyer delivers the inside line from the England camp and the best World Cup analysis from our award-winning writers in Russia, just say: 'Alexa, ask Times Sport for the latest World Cup briefing'. Would you like to hear the briefing now?"
+            "Every morning Natalie Sawyer delivers the inside line from the England camp and the best World Cup analysis from our award-winning writers in Russia. In a bite-size update, Natalie will bring you the thoughts of writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd, along with those of Patrick Vieira, the World Cup-winning former France captain, just say: 'Alexa, ask Times Sport for the latest World Cup briefing'. Would you like to hear the latest briefing now?"
         },
         shouldEndSession: false
+      };
+    case "AudioPlayer.PlaybackNearlyFinished":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.ClearQueue",
+            clearBehavior: "CLEAR_ENQUEUED"
+          }
+        ]
+      };
+    case "AudioPlayer.PlaybackStopped":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.ClearQueue",
+            clearBehavior: "CLEAR_ENQUEUED"
+          }
+        ]
       };
     default:
       return {

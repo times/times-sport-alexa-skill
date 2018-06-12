@@ -9,6 +9,9 @@ jest.mock("../helpers/get-audio-data", () => ({
       enclosure: { url: "https://www.thetimes.co.uk/podcast" }
     })
 }));
+jest.mock("universal-analytics", () => () => ({
+  event: (_, cb) => cb()
+}));
 
 const isEventValid = require("../helpers/is-event-valid");
 const { getUpdate } = require("../handler");
