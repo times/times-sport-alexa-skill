@@ -9,6 +9,9 @@ jest.mock("../helpers/get-audio-data", () => ({
       enclosure: { url: "https://www.thetimes.co.uk/podcast" }
     })
 }));
+jest.mock("universal-analytics", () => () => ({
+  event: (_, cb) => cb()
+}));
 
 const isEventValid = require("../helpers/is-event-valid");
 const { getUpdate } = require("../handler");
@@ -51,8 +54,9 @@ describe("integration test", () => {
                         }
                       ]
                     },
-                    subtitle: "All the latest from Russia",
-                    title: "The Times World Cup briefing"
+                    subtitle:
+                      "Natalie Sawyer brings you the key stories from Russia",
+                    title: "Times Sport World Cup Briefing"
                   },
                   stream: {
                     offsetInMilliseconds: 0,

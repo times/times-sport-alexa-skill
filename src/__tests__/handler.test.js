@@ -234,21 +234,21 @@ describe("handler#getUpdate()", () => {
     );
   });
 
-  it("should call the callback with a null response for an System.ExceptionEncountered", done => {
+  it("should call the callback with the error message in the response for an System.ExceptionEncountered", done => {
     isEventValid.mockImplementation(() => true);
 
     getUpdate(
       {
         request: {
-          type: "System.ExceptionEncountered"
+          type: "System.ExceptionEncountered",
+          error: {
+            message: "Some error message"
+          }
         }
       },
       {},
-      (error, response) => {
-        expect(error).toEqual(null);
-        expect(response).toEqual({
-          version: "1.0"
-        });
+      error => {
+        expect(error).toEqual("Some error message");
         done();
       }
     );
