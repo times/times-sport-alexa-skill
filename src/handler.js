@@ -16,12 +16,12 @@ const makeRequest = async event => {
       return asyncResponse(Promise.resolve());
 
     case "AudioPlayer.PlaybackNearlyFinished":
-      console.log("Playback almost over!"); // eslint-disable-line no-console
-      return asyncResponse(Promise.resolve());
+      return asyncResponse(
+        custom({ name: "AudioPlayer.PlaybackNearlyFinished" })
+      );
 
     case "AudioPlayer.PlaybackStopped":
-      console.log("Playback stopped!"); // eslint-disable-line no-console
-      return asyncResponse(Promise.resolve());
+      return asyncResponse(custom({ name: "AudioPlayer.PlaybackStopped" }));
 
     case "PlaybackController.PlayCommandIssued":
       return asyncResponse(custom({ name: "AMAZON.ResumeIntent" }, context));
@@ -30,7 +30,7 @@ const makeRequest = async event => {
       return asyncResponse(custom({ name: "AMAZON.PauseIntent" }));
 
     case "System.ExceptionEncountered":
-      return asyncResponse(Promise.resolve());
+      return asyncResponse(Promise.reject(request.error.message));
 
     default:
       return asyncResponse(Promise.reject("Unable to handle request"));

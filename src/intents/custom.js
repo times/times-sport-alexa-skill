@@ -4,18 +4,17 @@ const {
   getLatestBriefing,
   getLatestPodcast
 } = require("../helpers/get-audio-data");
-const { ga } = require("./config");
+const { ga } = require("../config");
 
 const sendEventFactory = ga => tracking =>
-  new Promise((resolve, reject) =>
-    ga.event(tracking, err => {
-      if (err) return reject(err);
-      resolve();
-    })
-  );
+  new Promise(resolve => ga.event(tracking, () => resolve()));
 
 module.exports = async (intent, context = {}) => {
-  const visitor = ua(ga.trackingId, event.session && event.session.user.userId);
+  const visitor = ua(
+    ga.trackingId,
+    context.System && context.System.user && context.System.user.userId
+  );
+
   const sendEvent = sendEventFactory(visitor);
 
   const { AudioPlayer = null } = context;
@@ -86,8 +85,9 @@ module.exports = async (intent, context = {}) => {
                 offsetInMilliseconds: 0
               },
               metadata: {
-                title: "The Times World Cup briefing",
-                subtitle: "All the latest from Russia",
+                title: "Times Sport World Cup Briefing",
+                subtitle:
+                  "Natalie Sawyer brings you the key stories from Russia",
                 art: {
                   contentDescription: "The Times World Cup briefing logo",
                   sources: [
@@ -158,7 +158,7 @@ module.exports = async (intent, context = {}) => {
             type: "AudioPlayer.Stop"
           }
         ],
-        shouldEndSession: false
+        shouldEndSession: true
       };
     case "AMAZON.HelpIntent":
       await sendEvent({
@@ -169,16 +169,35 @@ module.exports = async (intent, context = {}) => {
       return {
         outputSpeech: {
           type: "PlainText",
-          text: "Help text goes here, with a prompting follow up question..?"
+          text:
+            "Every morning Natalie Sawyer delivers the inside line from the England camp and the best World Cup analysis from our award-winning writers in Russia. In a bite-size update, Natalie will bring you the thoughts of writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd, along with those of Patrick Vieira, the World Cup-winning former France captain. Would you like to hear the latest briefing now?"
         },
         shouldEndSession: false
+      };
+    case "AudioPlayer.PlaybackNearlyFinished":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.ClearQueue",
+            clearBehavior: "CLEAR_ENQUEUED"
+          }
+        ]
+      };
+    case "AudioPlayer.PlaybackStopped":
+      return {
+        directives: [
+          {
+            type: "AudioPlayer.ClearQueue",
+            clearBehavior: "CLEAR_ENQUEUED"
+          }
+        ]
       };
     default:
       return {
         outputSpeech: {
           type: "PlainText",
           text:
-            "I'm sorry, I didn't understand what you said. Would you like to hear the update?"
+            "I'm sorry, I didn't understand what you said. Would you like to hear the latest World Cup briefing?"
         },
         shouldEndSession: false
       };
