@@ -85,11 +85,11 @@ module.exports = async (intent, context = {}) => {
                 offsetInMilliseconds: 0
               },
               metadata: {
-                title: "The Times Sport Premier League Briefing",
+                title: "Times Sport World Cup Briefing",
                 subtitle:
                   "Natalie Sawyer brings you the key stories from Russia",
                 art: {
-                  contentDescription: "The Times Sport briefing logo",
+                  contentDescription: "The Times World Cup briefing logo",
                   sources: [
                     {
                       url:

@@ -9,5 +9,3 @@ module.exports.getLatestBriefing = () => ({
       "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/times-sport-alexa-skill/assets/launch-briefing.mp3"
   }
 });
-
-// module.exports.getLatestPodcast().then(a => console.log({ a }));
