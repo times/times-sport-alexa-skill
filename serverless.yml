@@ -1,4 +1,4 @@
-service: world-cup-2018-briefing
+service: times-sport-alexa-skill
 
 provider:
   name: aws
