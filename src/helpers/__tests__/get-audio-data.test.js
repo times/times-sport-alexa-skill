@@ -21,21 +21,11 @@ describe("get audio date helper", () => {
   });
 
   describe("#getLatestBriefing()", () => {
-    // it("should call #loadLatestFeedItem() and return the response", () => {
-    //   mockLoadLatestFeedItem.mockImplementation(() => ({
-    //     foo: "baz"
-    //   }));
-    //
-    //   expect(getLatestBriefing()).toEqual({
-    //     foo: "baz"
-    //   });
-    // });
-
     it("should return the correct value", () => {
       expect(getLatestBriefing()).toEqual({
         enclosure: {
           url:
-            "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/latest-briefing.mp3"
+            "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/times-sport-alexa-skill/assets/launch-briefing.mp3"
         }
       });
     });
