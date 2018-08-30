@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --coverage",
     "lint": "eslint .",
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "deploy:assets": "aws s3 sync ./src/assets s3://nuk-tnl-editorial-prod-staticassets/public/2018/times-sport-alexa-skill/assets --acl=public-read"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
