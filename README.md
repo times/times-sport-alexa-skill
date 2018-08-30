@@ -24,8 +24,18 @@ $ yarn test
 
 ## Deployment
 
+### Skill
+
 The skill deploys to AWS Lambda, with the following command:
 
     $ yarn deploy --deploymentBucket= --profile= --stage=[dev] --region=[eu-west-1]
 
 _Ensure you pass the `--deploymentBucket` and `--profile` arguments. The `--stage` and `--region` arguments are optional._
+
+### Static assets
+
+To deploy the application assets to S3 (images, sample audio etc.) run the following command:
+
+    $ yarn deploy:assets
+
+_Note: You will need to have the `aws` CLI configured for this to run_
