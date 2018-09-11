@@ -170,7 +170,7 @@ module.exports = async (intent, context = {}) => {
         outputSpeech: {
           type: "PlainText",
           text:
-            "Natalie Sawyer delivers the key news, stats and analysis in the build-up to the Premier League weekend. In this bitesize briefing, Natalie will bring you the thoughts of our award-winning writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd on the big games and deliver her own Premier League predictions. Just say: “Alexa, launch Times Sport’s Premier League briefing”. Would you like to hear the latest briefing now?"
+            "Natalie Sawyer delivers the key news, stats and analysis in the build-up to the Premier League weekend. In this bitesize briefing, Natalie will bring you the thoughts of our award-winning writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd on the big games and deliver her own Premier League predictions. Just say: “Alexa, launch Times Sport”. Would you like to hear the latest briefing now?"
         },
         shouldEndSession: false
       };
