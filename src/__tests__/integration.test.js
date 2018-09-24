@@ -43,20 +43,20 @@ describe("integration test", () => {
                 audioItem: {
                   metadata: {
                     art: {
-                      contentDescription: "The Times World Cup briefing logo",
+                      contentDescription:
+                        "The Times Sport Premier League briefing logo",
                       sources: [
                         {
                           heightPixels: "640",
                           size: "MEDIUM",
                           url:
-                            "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/alexa-show-image-960x640.png",
+                            "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/times-sport-alexa-skill/assets/alexa-show-image-960x640.png",
                           widthPixels: "960"
                         }
                       ]
                     },
-                    subtitle:
-                      "Natalie Sawyer brings you the key stories from Russia",
-                    title: "Times Sport World Cup Briefing"
+                    subtitle: "Natalie Sawyer previews the weekend’s matches",
+                    title: "Times Sport Premier League Briefing"
                   },
                   stream: {
                     offsetInMilliseconds: 0,

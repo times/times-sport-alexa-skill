@@ -9,5 +9,3 @@ module.exports.getLatestBriefing = () => ({
       "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/latest-briefing.mp3"
   }
 });
-
-// module.exports.getLatestPodcast().then(a => console.log({ a }));

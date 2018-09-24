@@ -85,15 +85,15 @@ module.exports = async (intent, context = {}) => {
                 offsetInMilliseconds: 0
               },
               metadata: {
-                title: "Times Sport World Cup Briefing",
-                subtitle:
-                  "Natalie Sawyer brings you the key stories from Russia",
+                title: "Times Sport Premier League Briefing",
+                subtitle: "Natalie Sawyer previews the weekend’s matches",
                 art: {
-                  contentDescription: "The Times World Cup briefing logo",
+                  contentDescription:
+                    "The Times Sport Premier League briefing logo",
                   sources: [
                     {
                       url:
-                        "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/world-cup-alexa-breifing/assets/alexa-show-image-960x640.png",
+                        "https://nuk-tnl-editorial-prod-staticassets.s3.amazonaws.com/public/2018/times-sport-alexa-skill/assets/alexa-show-image-960x640.png",
                       size: "MEDIUM",
                       widthPixels: "960",
                       heightPixels: "640"
@@ -170,7 +170,7 @@ module.exports = async (intent, context = {}) => {
         outputSpeech: {
           type: "PlainText",
           text:
-            "Every morning Natalie Sawyer delivers the inside line from the England camp and the best World Cup analysis from our award-winning writers in Russia. In a bite-size update, Natalie will bring you the thoughts of writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd, along with those of Patrick Vieira, the World Cup-winning former France captain, just say: 'Alexa, ask Times Sport for the latest World Cup briefing'. Would you like to hear the latest briefing now?"
+            "Natalie Sawyer delivers the key news, stats and analysis in the build-up to the Premier League weekend. In this bitesize briefing, Natalie will bring you the thoughts of our award-winning writers including Henry Winter, Oliver Kay, Matt Dickinson and Alyson Rudd on the big games and deliver her own Premier League predictions. Just say: “Alexa, launch Times Sport”. Would you like to hear the latest briefing now?"
         },
         shouldEndSession: false
       };
@@ -197,7 +197,7 @@ module.exports = async (intent, context = {}) => {
         outputSpeech: {
           type: "PlainText",
           text:
-            "I'm sorry, I didn't understand what you said. Would you like to hear the daily briefing?"
+            "I'm sorry, I didn't understand what you said. Would you like to hear the latest briefing from Natalie Sawyer?"
         },
         shouldEndSession: false
       };

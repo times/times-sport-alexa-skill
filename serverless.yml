@@ -1,4 +1,4 @@
-service: world-cup-2018-briefing
+service: times-sport-alexa-skill
 
 provider:
   name: aws
@@ -9,7 +9,8 @@ provider:
   deploymentBucket: ${opt:deploymentBucket}
   environment:
     ENV: ${opt:stage, self:custom.stage}
-    SOME_VAR: ${file(./env.yml):SOME_VAR}
+    ALEXA_APPLICATION_ID: ${file(./env.yml):ALEXA_APPLICATION_ID}
+    GA_TRACKING_ID: ${file(./env.yml):GA_TRACKING_ID}
 
 custom:
   region: eu-west-1
